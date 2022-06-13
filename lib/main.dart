@@ -19,9 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const FeedProvider(
-        child: PostsProvider(
-          child: FeedView(),
-        ),
+        child: FeedView(),
       ),
     );
   }

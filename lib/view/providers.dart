@@ -26,29 +26,11 @@ class FeedProvider extends StatelessWidget {
   }) : super(key: key);
 
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => FeedViewModel(),
-      child: child,
-    );
-  }
-}
-
-class PostsProvider extends StatelessWidget {
-  const PostsProvider({Key? key, required this.child}) : super(key: key);
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final FeedViewModel feedViewModel = context.read<FeedViewModel>();
-
-    final Future<List<Post>> posts = feedViewModel.getPosts();
-
-    return FutureProvider<List<Post>?>.value(
-      initialData: null,
-      value: posts,
       child: child,
     );
   }

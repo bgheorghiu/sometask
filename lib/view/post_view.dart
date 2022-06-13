@@ -151,7 +151,7 @@ class _PostViewState extends State<PostView> with TickerProviderStateMixin {
                 GestureDetector(
                   child: Image(
                     image: model.isLiked ? model.getHeartFilledIcon() : model.getHeartIcon(),
-                    color: model.isLiked ? Colors.red : null,
+                    color: model.isLiked ? Colors.pink : null,
                     width: 24,
                   ),
                   onTap: model.setIsLiked,
@@ -171,7 +171,7 @@ class _PostViewState extends State<PostView> with TickerProviderStateMixin {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
             child: ReadMoreText(
               post.description,
               trimLines: 2,
@@ -181,19 +181,20 @@ class _PostViewState extends State<PostView> with TickerProviderStateMixin {
               moreStyle: const TextStyle(color: Colors.grey),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 35),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: false,
-                children: post.tags.map((model) => TagCard(name: model.name)).toList(),
+          if (post.tags.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 35),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: false,
+                  children: post.tags.map((model) => TagCard(name: model.name)).toList(),
+                ),
               ),
             ),
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: Text(
               DateTime.now().difference(DateTime.parse(post.createdAt)).inDays.toString() + ' days ago',
               style: TextStyle(

@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:interview/models/post_model.dart';
 import 'package:interview/view/providers.dart';
+import 'package:interview/view_models/feed_view_model.dart';
 import 'package:provider/provider.dart';
 
-class FeedView extends StatelessWidget {
+class FeedView extends StatefulWidget {
   const FeedView({Key? key}) : super(key: key);
 
   @override
+  State<FeedView> createState() => _FeedViewState();
+}
+
+class _FeedViewState extends State<FeedView> {
+  @override
   Widget build(BuildContext context) {
-    final List<Post>? posts = context.watch<List<Post>?>();
+    final FeedViewModel model = context.watch<FeedViewModel>();
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -26,10 +32,11 @@ class FeedView extends StatelessWidget {
           const Spacer(),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.9,
-            child: posts != null
+            child: model.posts.isNotEmpty
                 ? ListView(
+                    controller: model.controller,
                     physics: const BouncingScrollPhysics(),
-                    children: posts.map((post) => PostProvider(post)).toList(),
+                    children: model.posts.map((post) => PostProvider(post)).toList(),
                   )
                 : const Center(
                     child: CircularProgressIndicator(

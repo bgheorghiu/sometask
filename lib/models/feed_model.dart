@@ -9,13 +9,13 @@ class FeedModel with ChangeNotifier {
 
   final Client _client;
 
-  Future<List<Post>> getPosts() async {
+  Future<List<Post>> getPosts(int page) async {
     final Uri url = Uri(
       scheme: 'https',
       host: 'dev.api.spotlas.com',
       pathSegments: <String>['interview', 'feed'],
       queryParameters: <String, String>{
-        'page': '1',
+        'page': '$page',
       },
     );
     final Response response = await _client.get(url);
